@@ -38,6 +38,32 @@ def read_and_calculate(filepath):
         messagebox.showerror("Ошибка", f"Произошла непредвиденная ошибка: {e}")
 
 
+def calculate_all():
+    """Выполняет все математические операции и выводит результаты."""
+    try:
+        num1 = float(a_value.get())
+        num2 = float(b_value.get())
+
+        results = {
+            "Сложение": num1 + num2,
+            "Вычитание": num1 - num2,
+            "Умножение": num1 * num2,
+            "Деление": num1 / num2 if num2 != 0 else "Ошибка: деление на ноль",
+            "Возведение в степень": num1 ** num2,
+        }
+
+        result_text = ""
+        for operation, result in results.items():
+            result_text += f"{operation}: {result}\n"
+
+        result_label.config(text=result_text, wraplength=300)
+
+    except ValueError as e:
+        messagebox.showerror("Ошибка", f"Некорректный ввод: {e}")
+    except Exception as e:
+        messagebox.showerror("Ошибка", f"Произошла непредвиденная ошибка: {e}")
+
+
 def read_file():
     """Открывает диалоговое окно для выбора файла и вычисляет среднее значение."""
     filepath = filedialog.askopenfilename(defaultextension=".txt", filetypes=[("Text files", "*.txt")])
@@ -82,6 +108,7 @@ a_value = ttk.Entry(root, width=20, style="TEntry")
 a_value.grid(row=4, column=0, padx=10, pady=5, sticky="e")
 b_value = ttk.Entry(root, width=20, style="TEntry")
 b_value.grid(row=4, column=1, padx=10, pady=5, sticky="e")
+
 
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
